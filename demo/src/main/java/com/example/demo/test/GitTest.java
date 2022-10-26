@@ -10,5 +10,6 @@ public class GitTest {
     public static void main(String[] args) {
         System.out.println("Git Test1");
         System.out.println("Git Test2");
+        System.out.println("Git Test3");
     }
 }

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realtime.realtime.dao.TTpHelpAndSupportRecordDao">
+
+    <resultMap type="com.realtime.realtime.entity.TTpHelpAndSupportRecord" id="TTpHelpAndSupportRecordMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="seatNo" column="seat_no" jdbcType="VARCHAR"/>
+        <result property="seatName" column="seat_name" jdbcType="VARCHAR"/>
+        <result property="mainCallNumber" column="main_call_number" jdbcType="VARCHAR"/>
+        <result property="acceptNumber" column="accept_number" jdbcType="VARCHAR"/>
+        <result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+        <result property="starLevel" column="star_level" jdbcType="VARCHAR"/>
+        <result property="supportType" column="support_type" jdbcType="VARCHAR"/>
+        <result property="supportState" column="support_state" jdbcType="VARCHAR"/>
+        <result property="sendHelpTime" column="send_help_time" jdbcType="TIMESTAMP"/>
+        <result property="supportTime" column="support_time" jdbcType="TIMESTAMP"/>
+        <result property="groupLeader" column="group_leader" jdbcType="VARCHAR"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="modfTime" column="modf_time" jdbcType="TIMESTAMP"/>
+        <result property="opPrenId" column="op_pren_id" jdbcType="VARCHAR"/>
+        <result property="cmosModifyTime" column="cmos_modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TTpHelpAndSupportRecordMap">
+        select
+          id, seat_no, seat_name, main_call_number, accept_number, city_name, star_level, support_type, support_state, send_help_time, support_time, group_leader, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_help_and_support_record
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TTpHelpAndSupportRecordMap">
+        select
+          id, seat_no, seat_name, main_call_number, accept_number, city_name, star_level, support_type, support_state, send_help_time, support_time, group_leader, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_help_and_support_record
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TTpHelpAndSupportRecordMap">
+        select
+        id, seat_no, seat_name, main_call_number, accept_number, city_name, star_level, support_type, support_state,
+        send_help_time, support_time, group_leader, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_help_and_support_record
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="seatNo != null and seatNo != ''">
+                and seat_no = #{seatNo}
+            </if>
+            <if test="seatName != null and seatName != ''">
+                and seat_name = #{seatName}
+            </if>
+            <if test="mainCallNumber != null and mainCallNumber != ''">
+                and main_call_number = #{mainCallNumber}
+            </if>
+            <if test="acceptNumber != null and acceptNumber != ''">
+                and accept_number = #{acceptNumber}
+            </if>
+            <if test="cityName != null and cityName != ''">
+                and city_name = #{cityName}
+            </if>
+            <if test="starLevel != null and starLevel != ''">
+                and star_level = #{starLevel}
+            </if>
+            <if test="supportType != null and supportType != ''">
+                and support_type = #{supportType}
+            </if>
+            <if test="supportState != null and supportState != ''">
+                and support_state = #{supportState}
+            </if>
+            <if test="sendHelpTime != null">
+                and send_help_time = #{sendHelpTime}
+            </if>
+            <if test="supportTime != null">
+                and support_time = #{supportTime}
+            </if>
+            <if test="groupLeader != null and groupLeader != ''">
+                and group_leader = #{groupLeader}
+            </if>
+            <if test="crtTime != null">
+                and crt_time = #{crtTime}
+            </if>
+            <if test="modfTime != null">
+                and modf_time = #{modfTime}
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                and op_pren_id = #{opPrenId}
+            </if>
+            <if test="cmosModifyTime != null">
+                and cmos_modify_time = #{cmosModifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_help_and_support_record(seat_no, seat_name, main_call_number, accept_number, city_name, star_level, support_type, support_state, send_help_time, support_time, group_leader, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values (#{seatNo}, #{seatName}, #{mainCallNumber}, #{acceptNumber}, #{cityName}, #{starLevel}, #{supportType}, #{supportState}, #{sendHelpTime}, #{supportTime}, #{groupLeader}, #{crtTime}, #{modfTime}, #{opPrenId}, #{cmosModifyTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_help_and_support_record(seat_no, seat_name, main_call_number, accept_number,
+        city_name, star_level, support_type, support_state, send_help_time, support_time, group_leader, crt_time,
+        modf_time, op_pren_id, cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.seatNo}, #{entity.seatName}, #{entity.mainCallNumber}, #{entity.acceptNumber}, #{entity.cityName},
+            #{entity.starLevel}, #{entity.supportType}, #{entity.supportState}, #{entity.sendHelpTime},
+            #{entity.supportTime}, #{entity.groupLeader}, #{entity.crtTime}, #{entity.modfTime}, #{entity.opPrenId},
+            #{entity.cmosModifyTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_help_and_support_record(seat_no, seat_name, main_call_number, accept_number,
+        city_name, star_level, support_type, support_state, send_help_time, support_time, group_leader, crt_time,
+        modf_time, op_pren_id, cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.seatNo}, #{entity.seatName}, #{entity.mainCallNumber}, #{entity.acceptNumber}, #{entity.cityName},
+            #{entity.starLevel}, #{entity.supportType}, #{entity.supportState}, #{entity.sendHelpTime},
+            #{entity.supportTime}, #{entity.groupLeader}, #{entity.crtTime}, #{entity.modfTime}, #{entity.opPrenId},
+            #{entity.cmosModifyTime})
+        </foreach>
+        on duplicate key update
+        seat_no = values(seat_no) , seat_name = values(seat_name) , main_call_number = values(main_call_number) ,
+        accept_number = values(accept_number) , city_name = values(city_name) , star_level = values(star_level) ,
+        support_type = values(support_type) , support_state = values(support_state) , send_help_time =
+        values(send_help_time) , support_time = values(support_time) , group_leader = values(group_leader) , crt_time =
+        values(crt_time) , modf_time = values(modf_time) , op_pren_id = values(op_pren_id) , cmos_modify_time =
+        values(cmos_modify_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update realtime.t_tp_help_and_support_record
+        <set>
+            <if test="seatNo != null and seatNo != ''">
+                seat_no = #{seatNo},
+            </if>
+            <if test="seatName != null and seatName != ''">
+                seat_name = #{seatName},
+            </if>
+            <if test="mainCallNumber != null and mainCallNumber != ''">
+                main_call_number = #{mainCallNumber},
+            </if>
+            <if test="acceptNumber != null and acceptNumber != ''">
+                accept_number = #{acceptNumber},
+            </if>
+            <if test="cityName != null and cityName != ''">
+                city_name = #{cityName},
+            </if>
+            <if test="starLevel != null and starLevel != ''">
+                star_level = #{starLevel},
+            </if>
+            <if test="supportType != null and supportType != ''">
+                support_type = #{supportType},
+            </if>
+            <if test="supportState != null and supportState != ''">
+                support_state = #{supportState},
+            </if>
+            <if test="sendHelpTime != null">
+                send_help_time = #{sendHelpTime},
+            </if>
+            <if test="supportTime != null">
+                support_time = #{supportTime},
+            </if>
+            <if test="groupLeader != null and groupLeader != ''">
+                group_leader = #{groupLeader},
+            </if>
+            <if test="crtTime != null">
+                crt_time = #{crtTime},
+            </if>
+            <if test="modfTime != null">
+                modf_time = #{modfTime},
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                op_pren_id = #{opPrenId},
+            </if>
+            <if test="cmosModifyTime != null">
+                cmos_modify_time = #{cmosModifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from realtime.t_tp_help_and_support_record where id = #{id}
+    </delete>
+
+</mapper>
+

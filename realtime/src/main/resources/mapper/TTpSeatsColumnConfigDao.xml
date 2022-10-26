@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realtime.realtime.dao.TTpSeatsColumnConfigDao">
+
+    <resultMap type="com.realtime.realtime.entity.TTpSeatsColumnConfig" id="TTpSeatsColumnConfigMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="groupKey" column="group_key" jdbcType="VARCHAR"/>
+        <result property="targetDictId" column="target_dict_id" jdbcType="VARCHAR"/>
+        <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="modfTime" column="modf_time" jdbcType="TIMESTAMP"/>
+        <result property="cmosModifyTime" column="cmos_modify_time" jdbcType="TIMESTAMP"/>
+        <result property="opPrenId" column="op_pren_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TTpSeatsColumnConfigMap">
+        select
+          id, group_key, target_dict_id, sort_order, crt_time, modf_time, cmos_modify_time, op_pren_id
+        from realtime.t_tp_seats_column_config
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TTpSeatsColumnConfigMap">
+        select
+          id, group_key, target_dict_id, sort_order, crt_time, modf_time, cmos_modify_time, op_pren_id
+        from realtime.t_tp_seats_column_config
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TTpSeatsColumnConfigMap">
+        select
+        id, group_key, target_dict_id, sort_order, crt_time, modf_time, cmos_modify_time, op_pren_id
+        from realtime.t_tp_seats_column_config
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="groupKey != null and groupKey != ''">
+                and group_key = #{groupKey}
+            </if>
+            <if test="targetDictId != null and targetDictId != ''">
+                and target_dict_id = #{targetDictId}
+            </if>
+            <if test="sortOrder != null">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="crtTime != null">
+                and crt_time = #{crtTime}
+            </if>
+            <if test="modfTime != null">
+                and modf_time = #{modfTime}
+            </if>
+            <if test="cmosModifyTime != null">
+                and cmos_modify_time = #{cmosModifyTime}
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                and op_pren_id = #{opPrenId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.realtime.realtime.entity.TTpSeatsColumnConfig">
+        insert into t_tp_seats_column_config(group_key, target_dict_id, sort_order, crt_time, modf_time, cmos_modify_time, op_pren_id)
+        values (#{groupKey}, #{targetDictId}, #{sortOrder}, #{crtTime}, #{modfTime}, #{cmosModifyTime}, #{opPrenId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_seats_column_config(group_key, target_dict_id, sort_order, crt_time, modf_time,
+        cmos_modify_time, op_pren_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.groupKey}, #{entity.targetDictId}, #{entity.sortOrder}, #{entity.crtTime}, #{entity.modfTime},
+            #{entity.cmosModifyTime}, #{entity.opPrenId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_seats_column_config(group_key, target_dict_id, sort_order, crt_time, modf_time,
+        cmos_modify_time, op_pren_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.groupKey}, #{entity.targetDictId}, #{entity.sortOrder}, #{entity.crtTime}, #{entity.modfTime},
+            #{entity.cmosModifyTime}, #{entity.opPrenId})
+        </foreach>
+        on duplicate key update
+        group_key = values(group_key) , target_dict_id = values(target_dict_id) , sort_order = values(sort_order) ,
+        crt_time = values(crt_time) , modf_time = values(modf_time) , cmos_modify_time = values(cmos_modify_time) ,
+        op_pren_id = values(op_pren_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update realtime.t_tp_seats_column_config
+        <set>
+            <if test="groupKey != null and groupKey != ''">
+                group_key = #{groupKey},
+            </if>
+            <if test="targetDictId != null and targetDictId != ''">
+                target_dict_id = #{targetDictId},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="crtTime != null">
+                crt_time = #{crtTime},
+            </if>
+            <if test="modfTime != null">
+                modf_time = #{modfTime},
+            </if>
+            <if test="cmosModifyTime != null">
+                cmos_modify_time = #{cmosModifyTime},
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                op_pren_id = #{opPrenId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from realtime.t_tp_seats_column_config where id = #{id}
+    </delete>
+
+</mapper>
+

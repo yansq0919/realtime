@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realtime.realtime.dao.FileStorageDao">
+
+    <resultMap type="com.realtime.realtime.entity.FileStorage" id="FileStorageMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="modfTime" column="modf_time" jdbcType="TIMESTAMP"/>
+        <result property="cmosModifyTime" column="cmos_modify_time" jdbcType="TIMESTAMP"/>
+        <result property="opPrenId" column="op_pren_id" jdbcType="VARCHAR"/>
+        <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+        <result property="fileUrl" column="file_url" jdbcType="VARCHAR"/>
+        <result property="fileType" column="file_type" jdbcType="VARCHAR"/>
+        <result property="busId" column="bus_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FileStorageMap">
+        select
+          id, crt_time, modf_time, cmos_modify_time, op_pren_id, file_name, file_url, file_type, bus_id
+        from realtime.t_tp_file_storage
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FileStorageMap">
+        select
+          id, crt_time, modf_time, cmos_modify_time, op_pren_id, file_name, file_url, file_type, bus_id
+        from realtime.t_tp_file_storage
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FileStorageMap">
+        select
+        id, crt_time, modf_time, cmos_modify_time, op_pren_id, file_name, file_url, file_type, bus_id
+        from realtime.t_tp_file_storage
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="crtTime != null">
+                and crt_time = #{crtTime}
+            </if>
+            <if test="modfTime != null">
+                and modf_time = #{modfTime}
+            </if>
+            <if test="cmosModifyTime != null">
+                and cmos_modify_time = #{cmosModifyTime}
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                and op_pren_id = #{opPrenId}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                and file_name = #{fileName}
+            </if>
+            <if test="fileUrl != null and fileUrl != ''">
+                and file_url = #{fileUrl}
+            </if>
+            <if test="fileType != null and fileType != ''">
+                and file_type = #{fileType}
+            </if>
+            <if test="busId != null">
+                and bus_id = #{busId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_file_storage(crt_time, modf_time, cmos_modify_time, op_pren_id, file_name, file_url, file_type, bus_id)
+        values (#{crtTime}, #{modfTime}, #{cmosModifyTime}, #{opPrenId}, #{fileName}, #{fileUrl}, #{fileType}, #{busId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_file_storage(crt_time, modf_time, cmos_modify_time, op_pren_id, file_name, file_url,
+        file_type, bus_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.crtTime}, #{entity.modfTime}, #{entity.cmosModifyTime}, #{entity.opPrenId}, #{entity.fileName},
+            #{entity.fileUrl}, #{entity.fileType}, #{entity.busId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_file_storage(crt_time, modf_time, cmos_modify_time, op_pren_id, file_name, file_url,
+        file_type, bus_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.crtTime}, #{entity.modfTime}, #{entity.cmosModifyTime}, #{entity.opPrenId}, #{entity.fileName},
+            #{entity.fileUrl}, #{entity.fileType}, #{entity.busId})
+        </foreach>
+        on duplicate key update
+        crt_time = values(crt_time) , modf_time = values(modf_time) , cmos_modify_time = values(cmos_modify_time) ,
+        op_pren_id = values(op_pren_id) , file_name = values(file_name) , file_url = values(file_url) , file_type =
+        values(file_type) , bus_id = values(bus_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update realtime.t_tp_file_storage
+        <set>
+            <if test="crtTime != null">
+                crt_time = #{crtTime},
+            </if>
+            <if test="modfTime != null">
+                modf_time = #{modfTime},
+            </if>
+            <if test="cmosModifyTime != null">
+                cmos_modify_time = #{cmosModifyTime},
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                op_pren_id = #{opPrenId},
+            </if>
+            <if test="fileName != null and fileName != ''">
+                file_name = #{fileName},
+            </if>
+            <if test="fileUrl != null and fileUrl != ''">
+                file_url = #{fileUrl},
+            </if>
+            <if test="fileType != null and fileType != ''">
+                file_type = #{fileType},
+            </if>
+            <if test="busId != null">
+                bus_id = #{busId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from realtime.t_tp_file_storage where id = #{id}
+    </delete>
+
+</mapper>
+

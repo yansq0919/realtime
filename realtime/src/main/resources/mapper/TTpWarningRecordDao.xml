@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realtime.realtime.dao.TTpWarningRecordDao">
+
+    <resultMap type="com.realtime.realtime.entity.TTpWarningRecord" id="TTpWarningRecordMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="warnId" column="warn_id" jdbcType="VARCHAR"/>
+        <result property="warnCfgId" column="warn_cfg_id" jdbcType="VARCHAR"/>
+        <result property="warnName" column="warn_name" jdbcType="VARCHAR"/>
+        <result property="warnLevel" column="warn_level" jdbcType="VARCHAR"/>
+        <result property="warningType" column="warning_type" jdbcType="VARCHAR"/>
+        <result property="warnContent" column="warn_content" jdbcType="VARCHAR"/>
+        <result property="warnTime" column="warn_time" jdbcType="TIMESTAMP"/>
+        <result property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="groupLeaderNo" column="group_leader_no" jdbcType="VARCHAR"/>
+        <result property="seatsNo" column="seats_no" jdbcType="VARCHAR"/>
+        <result property="seatsName" column="seats_name" jdbcType="VARCHAR"/>
+        <result property="organ" column="organ" jdbcType="VARCHAR"/>
+        <result property="converTime" column="conver_time" jdbcType="VARCHAR"/>
+        <result property="callId" column="call_id" jdbcType="VARCHAR"/>
+        <result property="custPhone" column="cust_phone" jdbcType="VARCHAR"/>
+        <result property="starLevel" column="star_level" jdbcType="VARCHAR"/>
+        <result property="custLabel" column="cust_label" jdbcType="VARCHAR"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="modfTime" column="modf_time" jdbcType="TIMESTAMP"/>
+        <result property="opPrenId" column="op_pren_id" jdbcType="VARCHAR"/>
+        <result property="cmosModifyTime" column="cmos_modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TTpWarningRecordMap">
+        select
+          id, warn_id, warn_cfg_id, warn_name, warn_level, warning_type, warn_content, warn_time, group_id, group_name, group_leader_no, seats_no, seats_name, organ, conver_time, call_id, cust_phone, star_level, cust_label, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_warning_record
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TTpWarningRecordMap">
+        select
+          id, warn_id, warn_cfg_id, warn_name, warn_level, warning_type, warn_content, warn_time, group_id, group_name, group_leader_no, seats_no, seats_name, organ, conver_time, call_id, cust_phone, star_level, cust_label, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_warning_record
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TTpWarningRecordMap">
+        select
+        id, warn_id, warn_cfg_id, warn_name, warn_level, warning_type, warn_content, warn_time, group_id, group_name,
+        group_leader_no, seats_no, seats_name, organ, conver_time, call_id, cust_phone, star_level, cust_label,
+        crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_warning_record
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="warnId != null and warnId != ''">
+                and warn_id = #{warnId}
+            </if>
+            <if test="warnCfgId != null and warnCfgId != ''">
+                and warn_cfg_id = #{warnCfgId}
+            </if>
+            <if test="warnName != null and warnName != ''">
+                and warn_name = #{warnName}
+            </if>
+            <if test="warnLevel != null and warnLevel != ''">
+                and warn_level = #{warnLevel}
+            </if>
+            <if test="warningType != null and warningType != ''">
+                and warning_type = #{warningType}
+            </if>
+            <if test="warnContent != null and warnContent != ''">
+                and warn_content = #{warnContent}
+            </if>
+            <if test="warnTime != null">
+                and warn_time = #{warnTime}
+            </if>
+            <if test="groupId != null and groupId != ''">
+                and group_id = #{groupId}
+            </if>
+            <if test="groupName != null and groupName != ''">
+                and group_name = #{groupName}
+            </if>
+            <if test="groupLeaderNo != null and groupLeaderNo != ''">
+                and group_leader_no = #{groupLeaderNo}
+            </if>
+            <if test="seatsNo != null and seatsNo != ''">
+                and seats_no = #{seatsNo}
+            </if>
+            <if test="seatsName != null and seatsName != ''">
+                and seats_name = #{seatsName}
+            </if>
+            <if test="organ != null and organ != ''">
+                and organ = #{organ}
+            </if>
+            <if test="converTime != null and converTime != ''">
+                and conver_time = #{converTime}
+            </if>
+            <if test="callId != null and callId != ''">
+                and call_id = #{callId}
+            </if>
+            <if test="custPhone != null and custPhone != ''">
+                and cust_phone = #{custPhone}
+            </if>
+            <if test="starLevel != null and starLevel != ''">
+                and star_level = #{starLevel}
+            </if>
+            <if test="custLabel != null and custLabel != ''">
+                and cust_label = #{custLabel}
+            </if>
+            <if test="crtTime != null">
+                and crt_time = #{crtTime}
+            </if>
+            <if test="modfTime != null">
+                and modf_time = #{modfTime}
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                and op_pren_id = #{opPrenId}
+            </if>
+            <if test="cmosModifyTime != null">
+                and cmos_modify_time = #{cmosModifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_warning_record(warn_id, warn_cfg_id, warn_name, warn_level, warning_type, warn_content, warn_time, group_id, group_name, group_leader_no, seats_no, seats_name, organ, conver_time, call_id, cust_phone, star_level, cust_label, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values (#{warnId}, #{warnCfgId}, #{warnName}, #{warnLevel}, #{warningType}, #{warnContent}, #{warnTime}, #{groupId}, #{groupName}, #{groupLeaderNo}, #{seatsNo}, #{seatsName}, #{organ}, #{converTime}, #{callId}, #{custPhone}, #{starLevel}, #{custLabel}, #{crtTime}, #{modfTime}, #{opPrenId}, #{cmosModifyTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_warning_record(warn_id, warn_cfg_id, warn_name, warn_level, warning_type,
+        warn_content, warn_time, group_id, group_name, group_leader_no, seats_no, seats_name, organ, conver_time,
+        call_id, cust_phone, star_level, cust_label, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.warnId}, #{entity.warnCfgId}, #{entity.warnName}, #{entity.warnLevel}, #{entity.warningType},
+            #{entity.warnContent}, #{entity.warnTime}, #{entity.groupId}, #{entity.groupName}, #{entity.groupLeaderNo},
+            #{entity.seatsNo}, #{entity.seatsName}, #{entity.organ}, #{entity.converTime}, #{entity.callId},
+            #{entity.custPhone}, #{entity.starLevel}, #{entity.custLabel}, #{entity.crtTime}, #{entity.modfTime},
+            #{entity.opPrenId}, #{entity.cmosModifyTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_warning_record(warn_id, warn_cfg_id, warn_name, warn_level, warning_type,
+        warn_content, warn_time, group_id, group_name, group_leader_no, seats_no, seats_name, organ, conver_time,
+        call_id, cust_phone, star_level, cust_label, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.warnId}, #{entity.warnCfgId}, #{entity.warnName}, #{entity.warnLevel}, #{entity.warningType},
+            #{entity.warnContent}, #{entity.warnTime}, #{entity.groupId}, #{entity.groupName}, #{entity.groupLeaderNo},
+            #{entity.seatsNo}, #{entity.seatsName}, #{entity.organ}, #{entity.converTime}, #{entity.callId},
+            #{entity.custPhone}, #{entity.starLevel}, #{entity.custLabel}, #{entity.crtTime}, #{entity.modfTime},
+            #{entity.opPrenId}, #{entity.cmosModifyTime})
+        </foreach>
+        on duplicate key update
+        warn_id = values(warn_id) , warn_cfg_id = values(warn_cfg_id) , warn_name = values(warn_name) , warn_level =
+        values(warn_level) , warning_type = values(warning_type) , warn_content = values(warn_content) , warn_time =
+        values(warn_time) , group_id = values(group_id) , group_name = values(group_name) , group_leader_no =
+        values(group_leader_no) , seats_no = values(seats_no) , seats_name = values(seats_name) , organ = values(organ)
+        , conver_time = values(conver_time) , call_id = values(call_id) , cust_phone = values(cust_phone) , star_level =
+        values(star_level) , cust_label = values(cust_label) , crt_time = values(crt_time) , modf_time =
+        values(modf_time) , op_pren_id = values(op_pren_id) , cmos_modify_time = values(cmos_modify_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update realtime.t_tp_warning_record
+        <set>
+            <if test="warnId != null and warnId != ''">
+                warn_id = #{warnId},
+            </if>
+            <if test="warnCfgId != null and warnCfgId != ''">
+                warn_cfg_id = #{warnCfgId},
+            </if>
+            <if test="warnName != null and warnName != ''">
+                warn_name = #{warnName},
+            </if>
+            <if test="warnLevel != null and warnLevel != ''">
+                warn_level = #{warnLevel},
+            </if>
+            <if test="warningType != null and warningType != ''">
+                warning_type = #{warningType},
+            </if>
+            <if test="warnContent != null and warnContent != ''">
+                warn_content = #{warnContent},
+            </if>
+            <if test="warnTime != null">
+                warn_time = #{warnTime},
+            </if>
+            <if test="groupId != null and groupId != ''">
+                group_id = #{groupId},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                group_name = #{groupName},
+            </if>
+            <if test="groupLeaderNo != null and groupLeaderNo != ''">
+                group_leader_no = #{groupLeaderNo},
+            </if>
+            <if test="seatsNo != null and seatsNo != ''">
+                seats_no = #{seatsNo},
+            </if>
+            <if test="seatsName != null and seatsName != ''">
+                seats_name = #{seatsName},
+            </if>
+            <if test="organ != null and organ != ''">
+                organ = #{organ},
+            </if>
+            <if test="converTime != null and converTime != ''">
+                conver_time = #{converTime},
+            </if>
+            <if test="callId != null and callId != ''">
+                call_id = #{callId},
+            </if>
+            <if test="custPhone != null and custPhone != ''">
+                cust_phone = #{custPhone},
+            </if>
+            <if test="starLevel != null and starLevel != ''">
+                star_level = #{starLevel},
+            </if>
+            <if test="custLabel != null and custLabel != ''">
+                cust_label = #{custLabel},
+            </if>
+            <if test="crtTime != null">
+                crt_time = #{crtTime},
+            </if>
+            <if test="modfTime != null">
+                modf_time = #{modfTime},
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                op_pren_id = #{opPrenId},
+            </if>
+            <if test="cmosModifyTime != null">
+                cmos_modify_time = #{cmosModifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from realtime.t_tp_warning_record where id = #{id}
+    </delete>
+
+</mapper>
+

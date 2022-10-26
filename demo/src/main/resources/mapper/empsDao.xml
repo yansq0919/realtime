@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.emps">
+
+    <resultMap id="resultEmps" type="com.example.demo.entity.Emps">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="salary" jdbcType="VARCHAR" column="salary"/>
+    </resultMap>
+    <insert id="add">
+        insert into emps(age,name,salary) values
+        <foreach collection="list" item="entity" separator=",">
+            (#{entity.age},#{entity.name},#{entity.salary})
+        </foreach>
+    </insert>
+    <insert id="add2">
+        insert into emps(age,name,salary) values
+        <foreach collection="list" item="entity" separator=",">
+            (#{entity.age},#{entity.name},#{entity.salary})
+</foreach>
+    </insert>
+    <update id="update">
+        update emps
+        <set>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="name=null">
+                name=#{name},
+            </if>
+            <if test="salary!=null">
+                salary=#{salary},
+            </if>
+        </set>
+            where id=#{id}
+    </update>
+    <update id="update2" >
+        update emps
+            <set>
+        <if test="id!=null">
+            id=#{id},
+        </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="salary!=null">
+                salary=#{salary},
+            </if>
+            </set>
+            where id=#{id}
+    </update>
+    <delete id="remove">
+        delete from emps where id in
+        <foreach collection="array" item="idss" open="(" separator="," close=")">
+            #{idss}
+        </foreach>
+
+
+    </delete>
+    <delete id="remove2">
+        delete from emps where id in
+        <foreach collection="array" item="ids"  open="(" separator="," close=")" >
+        #{ids}
+    </foreach>
+    </delete>
+
+    <select id="findAll" resultType="com.example.demo.entity.Emps" resultMap="resultEmps">
+        select *from emps
+    </select>
+</mapper>

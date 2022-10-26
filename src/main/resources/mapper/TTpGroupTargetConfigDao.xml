@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realtime.realtime.dao.TTpGroupTargetConfigDao">
+
+    <resultMap type="com.realtime.realtime.entity.TTpGroupTargetConfig" id="TTpGroupTargetConfigMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="groupKey" column="group_key" jdbcType="VARCHAR"/>
+        <result property="timeDim" column="time_dim" jdbcType="VARCHAR"/>
+        <result property="targetDictId" column="target_dict_id" jdbcType="VARCHAR"/>
+        <result property="operatorStr" column="operator_str" jdbcType="VARCHAR"/>
+        <result property="warningValue" column="warning_value" jdbcType="NUMERIC"/>
+        <result property="targetValue" column="target_value" jdbcType="NUMERIC"/>
+        <result property="showInHome" column="show_in_home" jdbcType="INTEGER"/>
+        <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="modfTime" column="modf_time" jdbcType="TIMESTAMP"/>
+        <result property="opPrenId" column="op_pren_id" jdbcType="VARCHAR"/>
+        <result property="cmosModifyTime" column="cmos_modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TTpGroupTargetConfigMap">
+        select
+          id, group_key, time_dim, target_dict_id, operator_str, warning_value, target_value, show_in_home, sort_order, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_group_target_config
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TTpGroupTargetConfigMap">
+        select
+          id, group_key, time_dim, target_dict_id, operator_str, warning_value, target_value, show_in_home, sort_order, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_group_target_config
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TTpGroupTargetConfigMap">
+        select
+        id, group_key, time_dim, target_dict_id, operator_str, warning_value, target_value, show_in_home, sort_order,
+        crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_group_target_config
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="groupKey != null and groupKey != ''">
+                and group_key = #{groupKey}
+            </if>
+            <if test="timeDim != null and timeDim != ''">
+                and time_dim = #{timeDim}
+            </if>
+            <if test="targetDictId != null and targetDictId != ''">
+                and target_dict_id = #{targetDictId}
+            </if>
+            <if test="operatorStr != null and operatorStr != ''">
+                and operator_str = #{operatorStr}
+            </if>
+            <if test="warningValue != null">
+                and warning_value = #{warningValue}
+            </if>
+            <if test="targetValue != null">
+                and target_value = #{targetValue}
+            </if>
+            <if test="showInHome != null">
+                and show_in_home = #{showInHome}
+            </if>
+            <if test="sortOrder != null">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="crtTime != null">
+                and crt_time = #{crtTime}
+            </if>
+            <if test="modfTime != null">
+                and modf_time = #{modfTime}
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                and op_pren_id = #{opPrenId}
+            </if>
+            <if test="cmosModifyTime != null">
+                and cmos_modify_time = #{cmosModifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_group_target_config(group_key, time_dim, target_dict_id, operator_str, warning_value, target_value, show_in_home, sort_order, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values (#{groupKey}, #{timeDim}, #{targetDictId}, #{operatorStr}, #{warningValue}, #{targetValue}, #{showInHome}, #{sortOrder}, #{crtTime}, #{modfTime}, #{opPrenId}, #{cmosModifyTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_group_target_config(group_key, time_dim, target_dict_id, operator_str, warning_value,
+        target_value, show_in_home, sort_order, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.groupKey}, #{entity.timeDim}, #{entity.targetDictId}, #{entity.operatorStr},
+            #{entity.warningValue}, #{entity.targetValue}, #{entity.showInHome}, #{entity.sortOrder}, #{entity.crtTime},
+            #{entity.modfTime}, #{entity.opPrenId}, #{entity.cmosModifyTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_group_target_config(group_key, time_dim, target_dict_id, operator_str, warning_value,
+        target_value, show_in_home, sort_order, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.groupKey}, #{entity.timeDim}, #{entity.targetDictId}, #{entity.operatorStr},
+            #{entity.warningValue}, #{entity.targetValue}, #{entity.showInHome}, #{entity.sortOrder}, #{entity.crtTime},
+            #{entity.modfTime}, #{entity.opPrenId}, #{entity.cmosModifyTime})
+        </foreach>
+        on duplicate key update
+        group_key = values(group_key) , time_dim = values(time_dim) , target_dict_id = values(target_dict_id) ,
+        operator_str = values(operator_str) , warning_value = values(warning_value) , target_value =
+        values(target_value) , show_in_home = values(show_in_home) , sort_order = values(sort_order) , crt_time =
+        values(crt_time) , modf_time = values(modf_time) , op_pren_id = values(op_pren_id) , cmos_modify_time =
+        values(cmos_modify_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update realtime.t_tp_group_target_config
+        <set>
+            <if test="groupKey != null and groupKey != ''">
+                group_key = #{groupKey},
+            </if>
+            <if test="timeDim != null and timeDim != ''">
+                time_dim = #{timeDim},
+            </if>
+            <if test="targetDictId != null and targetDictId != ''">
+                target_dict_id = #{targetDictId},
+            </if>
+            <if test="operatorStr != null and operatorStr != ''">
+                operator_str = #{operatorStr},
+            </if>
+            <if test="warningValue != null">
+                warning_value = #{warningValue},
+            </if>
+            <if test="targetValue != null">
+                target_value = #{targetValue},
+            </if>
+            <if test="showInHome != null">
+                show_in_home = #{showInHome},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="crtTime != null">
+                crt_time = #{crtTime},
+            </if>
+            <if test="modfTime != null">
+                modf_time = #{modfTime},
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                op_pren_id = #{opPrenId},
+            </if>
+            <if test="cmosModifyTime != null">
+                cmos_modify_time = #{cmosModifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from realtime.t_tp_group_target_config where id = #{id}
+    </delete>
+
+</mapper>
+

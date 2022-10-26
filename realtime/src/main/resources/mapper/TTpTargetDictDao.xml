@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realtime.realtime.dao.TTpTargetDictDao">
+
+    <resultMap type="com.realtime.realtime.entity.TTpTargetDict" id="TTpTargetDictMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="targetId" column="target_id" jdbcType="INTEGER"/>
+        <result property="targetCode" column="target_code" jdbcType="VARCHAR"/>
+        <result property="targetName" column="target_name" jdbcType="VARCHAR"/>
+        <result property="targetUnit" column="target_unit" jdbcType="VARCHAR"/>
+        <result property="targetType" column="target_type" jdbcType="VARCHAR"/>
+        <result property="dataDim" column="data_dim" jdbcType="VARCHAR"/>
+        <result property="targetDim" column="target_dim" jdbcType="VARCHAR"/>
+        <result property="targetSource" column="target_source" jdbcType="VARCHAR"/>
+        <result property="targetDesc" column="target_desc" jdbcType="VARCHAR"/>
+        <result property="delayTime" column="delay_time" jdbcType="INTEGER"/>
+        <result property="viewType" column="view_type" jdbcType="VARCHAR"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="modfTime" column="modf_time" jdbcType="TIMESTAMP"/>
+        <result property="opPrenId" column="op_pren_id" jdbcType="VARCHAR"/>
+        <result property="cmosModifyTime" column="cmos_modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TTpTargetDictMap">
+        select
+          id, target_id, target_code, target_name, target_unit, target_type, data_dim, target_dim, target_source, target_desc, delay_time, view_type, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_target_dict
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TTpTargetDictMap">
+        select
+          id, target_id, target_code, target_name, target_unit, target_type, data_dim, target_dim, target_source, target_desc, delay_time, view_type, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_target_dict
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TTpTargetDictMap">
+        select
+        id, target_id, target_code, target_name, target_unit, target_type, data_dim, target_dim, target_source,
+        target_desc, delay_time, view_type, crt_time, modf_time, op_pren_id, cmos_modify_time
+        from realtime.t_tp_target_dict
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="targetId != null">
+                and target_id = #{targetId}
+            </if>
+            <if test="targetCode != null and targetCode != ''">
+                and target_code = #{targetCode}
+            </if>
+            <if test="targetName != null and targetName != ''">
+                and target_name = #{targetName}
+            </if>
+            <if test="targetUnit != null and targetUnit != ''">
+                and target_unit = #{targetUnit}
+            </if>
+            <if test="targetType != null and targetType != ''">
+                and target_type = #{targetType}
+            </if>
+            <if test="dataDim != null and dataDim != ''">
+                and data_dim = #{dataDim}
+            </if>
+            <if test="targetDim != null and targetDim != ''">
+                and target_dim = #{targetDim}
+            </if>
+            <if test="targetSource != null and targetSource != ''">
+                and target_source = #{targetSource}
+            </if>
+            <if test="targetDesc != null and targetDesc != ''">
+                and target_desc = #{targetDesc}
+            </if>
+            <if test="delayTime != null">
+                and delay_time = #{delayTime}
+            </if>
+            <if test="viewType != null and viewType != ''">
+                and view_type = #{viewType}
+            </if>
+            <if test="crtTime != null">
+                and crt_time = #{crtTime}
+            </if>
+            <if test="modfTime != null">
+                and modf_time = #{modfTime}
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                and op_pren_id = #{opPrenId}
+            </if>
+            <if test="cmosModifyTime != null">
+                and cmos_modify_time = #{cmosModifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_target_dict(target_id, target_code, target_name, target_unit, target_type, data_dim, target_dim, target_source, target_desc, delay_time, view_type, crt_time, modf_time, op_pren_id, cmos_modify_time)
+        values (#{targetId}, #{targetCode}, #{targetName}, #{targetUnit}, #{targetType}, #{dataDim}, #{targetDim}, #{targetSource}, #{targetDesc}, #{delayTime}, #{viewType}, #{crtTime}, #{modfTime}, #{opPrenId}, #{cmosModifyTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_target_dict(target_id, target_code, target_name, target_unit, target_type, data_dim,
+        target_dim, target_source, target_desc, delay_time, view_type, crt_time, modf_time, op_pren_id,
+        cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.targetId}, #{entity.targetCode}, #{entity.targetName}, #{entity.targetUnit}, #{entity.targetType},
+            #{entity.dataDim}, #{entity.targetDim}, #{entity.targetSource}, #{entity.targetDesc}, #{entity.delayTime},
+            #{entity.viewType}, #{entity.crtTime}, #{entity.modfTime}, #{entity.opPrenId}, #{entity.cmosModifyTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into realtime.t_tp_target_dict(target_id, target_code, target_name, target_unit, target_type, data_dim,
+        target_dim, target_source, target_desc, delay_time, view_type, crt_time, modf_time, op_pren_id,
+        cmos_modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.targetId}, #{entity.targetCode}, #{entity.targetName}, #{entity.targetUnit}, #{entity.targetType},
+            #{entity.dataDim}, #{entity.targetDim}, #{entity.targetSource}, #{entity.targetDesc}, #{entity.delayTime},
+            #{entity.viewType}, #{entity.crtTime}, #{entity.modfTime}, #{entity.opPrenId}, #{entity.cmosModifyTime})
+        </foreach>
+        on duplicate key update
+        target_id = values(target_id) , target_code = values(target_code) , target_name = values(target_name) ,
+        target_unit = values(target_unit) , target_type = values(target_type) , data_dim = values(data_dim) , target_dim
+        = values(target_dim) , target_source = values(target_source) , target_desc = values(target_desc) , delay_time =
+        values(delay_time) , view_type = values(view_type) , crt_time = values(crt_time) , modf_time = values(modf_time)
+        , op_pren_id = values(op_pren_id) , cmos_modify_time = values(cmos_modify_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update realtime.t_tp_target_dict
+        <set>
+            <if test="targetId != null">
+                target_id = #{targetId},
+            </if>
+            <if test="targetCode != null and targetCode != ''">
+                target_code = #{targetCode},
+            </if>
+            <if test="targetName != null and targetName != ''">
+                target_name = #{targetName},
+            </if>
+            <if test="targetUnit != null and targetUnit != ''">
+                target_unit = #{targetUnit},
+            </if>
+            <if test="targetType != null and targetType != ''">
+                target_type = #{targetType},
+            </if>
+            <if test="dataDim != null and dataDim != ''">
+                data_dim = #{dataDim},
+            </if>
+            <if test="targetDim != null and targetDim != ''">
+                target_dim = #{targetDim},
+            </if>
+            <if test="targetSource != null and targetSource != ''">
+                target_source = #{targetSource},
+            </if>
+            <if test="targetDesc != null and targetDesc != ''">
+                target_desc = #{targetDesc},
+            </if>
+            <if test="delayTime != null">
+                delay_time = #{delayTime},
+            </if>
+            <if test="viewType != null and viewType != ''">
+                view_type = #{viewType},
+            </if>
+            <if test="crtTime != null">
+                crt_time = #{crtTime},
+            </if>
+            <if test="modfTime != null">
+                modf_time = #{modfTime},
+            </if>
+            <if test="opPrenId != null and opPrenId != ''">
+                op_pren_id = #{opPrenId},
+            </if>
+            <if test="cmosModifyTime != null">
+                cmos_modify_time = #{cmosModifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from realtime.t_tp_target_dict where id = #{id}
+    </delete>
+
+</mapper>
+

@@ -16,7 +16,7 @@
     </insert>
     <insert id="add2">
         insert into emps(age,name,salary) values
-        <foreach collection="list" item="entity" separator=",">
+        <foreach collection="lists" item="entity" separator=",">
             (#{entity.age},#{entity.name},#{entity.salary})
 </foreach>
     </insert>
@@ -70,5 +70,11 @@
 
     <select id="findAll" resultType="com.example.demo.entity.Emps" resultMap="resultEmps">
         select *from emps
+    </select>
+    <select id="finaByIds" resultType="java.util.Map">
+        select *from emps where id in
+        <foreach collection="idss" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </select>
 </mapper>

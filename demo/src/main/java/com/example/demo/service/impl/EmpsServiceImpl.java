@@ -69,5 +69,10 @@ public class EmpsServiceImpl implements EmpsService {
         return emp.update2(map);
     }
 
+    @Override
+    public List<Map<String, Object>> findByIds(Map<String, Object> map) {
+        return emp.finaByIds(map);
+    }
+
 
 }

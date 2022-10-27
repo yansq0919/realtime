@@ -22,4 +22,5 @@ public interface emps {
     int remove2(Map<String,Object> map);
     int update(Emps emps);//更新
     int update2(Map<String,Object> map);
+    List<Map<String,Object>> finaByIds(Map<String,Object> map);
 }

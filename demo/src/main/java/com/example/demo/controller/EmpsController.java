@@ -48,16 +48,17 @@ public class EmpsController {
     }
     @PostMapping("/add")
     public int add(@RequestBody Map<String,Object> map){
-        List<Emps> list = (List<Emps>)map.get("list");
-
-        for (Emps e:list){
-            System.out.println(e);
-
-        }
-        return empsService.add(list);
+        List<Emps> lists = (List<Emps>)map.get("list");
+        log.info(lists.toString());
+//        for (Emps e:lists){
+//            System.out.println(e);
+//
+//        }
+        return empsService.add(lists);
     }
     @PostMapping("add2")
     public int add2(@RequestBody Map<String,Object> map){
+        log.info(map.toString());
         return empsService.add2(map);
     }
     @PostMapping("/remove")
@@ -100,5 +101,12 @@ public class EmpsController {
     @PostMapping("/update2")
     public int update2(@RequestBody Map<String,Object> map){
         return empsService.update2(map);
+    }
+
+    @PostMapping("/find")
+    public List<Map<String, Object>> findByIds(@RequestBody Map<String,Object> map){
+        log.info(map.toString());
+        List<Map<String, Object>> byIds = empsService.findByIds(map);
+        return byIds;
     }
 }

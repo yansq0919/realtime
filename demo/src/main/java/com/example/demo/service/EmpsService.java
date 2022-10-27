@@ -19,4 +19,5 @@ public interface EmpsService {
     int remove2(Map<String,Object> map);
     int update(Emps emps);
     int update2(Map<String,Object> map);
+    List<Map<String, Object>> findByIds(Map<String,Object> map);
 }

@@ -63,7 +63,7 @@
     </delete>
     <delete id="remove2">
         delete from emps where id in
-        <foreach collection="array" item="ids"  open="(" separator="," close=")" >
+        <foreach collection="a" item="ids"  open="(" separator="," close=")" >
         #{ids}
     </foreach>
     </delete>
